@@ -1,0 +1,67 @@
+﻿<h3 style="text-align:center">პაროლის შეცვლა</h3>
+<div align="center">
+    <table>
+        <tr>
+            <td>
+                @Html.DropDownList("User", (List<SelectListItem>)ViewBag.Users, new { style = "width: 250px;" })
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right">
+                <label class="checkbox-label" for="requestPasswordChangeOnLogin">
+                    შესვლისას პაროლის შეცვლა
+                    <input class="checkbox-input" id="requestPasswordChangeOnLogin" type="checkbox" title="შესვლისას პაროლის შეცვლა" />
+                </label>
+            </td>
+
+        </tr>
+        <tr>
+            <td style="text-align:center; padding-top:20px">
+                <button id="changePasswordButton" type="button" onclick="javascript: return changePassword();">პაროლის შეცვლა </button>
+            </td>
+        </tr>
+
+    </table>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function changePassword() {
+            var requestPasswordChange = $('#requestPasswordChangeOnLogin').is(":checked");
+            var user = $('#User').val();
+
+            var url = '@Url.Action("ChangePassword", "Home")';
+            var data = { userName: user, requestPasswordChangeOnLogin: requestPasswordChange };
+            $.post(url, data, function (result) {
+                if (result.status) {
+                    alert(result.msg);
+                }
+                else {
+                    alert(result.msg);
+                }
+            })
+
+            return false;
+        }
+
+    </script>
+<style type="text/css">
+    .checkbox-label {
+        display: block;
+        padding-left: 15px;
+        text-indent: -15px;
+        font-size:12px;
+    }
+
+    .checkbox-input {
+        width: 13px;
+        height: 13px;
+        padding: 0;
+        margin: 0;
+        vertical-align: bottom;
+        position: relative;
+        top: -1px;
+        *overflow: hidden;
+    }
+</style>
+}
+
